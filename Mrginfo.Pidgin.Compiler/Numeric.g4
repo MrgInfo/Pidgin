@@ -2,24 +2,58 @@ grammar Numeric;
 
 import Basic;
 
-                                        //  ASC       BIN
-fragment FractionSeparator  : '/' ;     //   47  110 1100
-fragment DecimalPoint       : '.' ;     //   46  110 1101
-fragment DateSeparator      : Minus ;   //   45  110 1110
-fragment TimeSeparator      : ':' ;     //   58  110 1111
-fragment TimePrefix         : 'T' ;     //   84
-fragment UtcZero            : 'Z' ;     //   90
+tokens { Hex, FractionSeparator, DecimalPoint, BinPrefix, HexPrefix, ExponentPrefix }
 
-fragment Date               : Digit Digit Digit Digit DateSeparator Digit Digit DateSeparator Digit Digit ;
+//                                  CHAR      ASC        BIN
+fragment Hex                    :  Digit
+                                |  'A'    //    65   110 1010
+                                |  'B'    //    66   110 1011
+                                |  'C'    //    67   110 1100
+                                |  'D'    //    68   110 1101
+                                |  'E'    //    69   110 1110
+                                |  'F'    //    70   110 1111
+                                ;
+fragment FractionSeparator      :  '/' ;  //    47  1110 0010
+fragment DecimalPoint           :  '.' ;  //    46  1110 0011
+fragment TimeSeparator          :  ':' ;  //    58  1110 0100
+fragment TimePrefix             :  'T' ;  //    84  1110 0101
+fragment UtcZero                :  'Z' ;  //    90  1110 0110
+fragment BinPrefix              :  'b' ;  //    98  1110 0111
+fragment HexPrefix              :  'h' ;  //   104  1110 1000
+fragment ExponentPrefix         :  'e' ;  //   101  1110 1001
+
+// Semantic error can occur!
+fragment Date               : Digit Digit Digit Digit Minus Digit Digit Minus Digit Digit ;
+// Semantic error can occur!
 fragment Time               : Digit Digit TimeSeparator Digit Digit TimeSeparator Digit Digit ( UtcZero | ( Plus | Minus ) Digit Digit ( TimeSeparator Digit Digit )? ) ;
 
-// ISO 8601 date
-DateTime                    : Date ( TimePrefix Time )?
+// Binary sugar
+BinNumber                   : ( Plus | Minus )? BinPrefix Bit+
                             ;
 
 // Hexadecimal sugar
-// Binary sugar
-// DateTime sugar
-// Fraction sugar
-// Decimal sugar
+HexNumber                   : ( Plus | Minus )? HexPrefix Hex+
+                            ;
 
+// DateTime sugar (ISO 8601 date)
+DateTime                    : Date ( TimePrefix Time )?
+                            ;
+
+// Fraction sugar
+fraction                    : numeric FractionSeparator numeric
+                            ;
+
+// Decimal sugar
+decimal                     : ( Plus | Minus )? Digit* DecimalPoint Digit+ ( ExponentPrefix ( Plus | Minus )? Digit+ )?
+                            ;
+
+numeric                     : BinNumber
+                            | DecNumber
+                            | HexNumber
+                            | DateTime
+                            ;
+
+composite                   : array
+                            | fraction
+                            | decimal
+                            ;

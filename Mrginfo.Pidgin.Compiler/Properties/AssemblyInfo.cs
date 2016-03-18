@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle( "Mrginfo.Pidgin.Compiler" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "Pidgin message compiler" )]
 [assembly: AssemblyCompany( "MRG-Infó Bt." )]
 [assembly: AssemblyProduct( "Pidgin" )]
 [assembly: AssemblyTrademark( "Pidgin™" )]
