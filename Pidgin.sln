@@ -9,6 +9,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Description = Pidgin message format
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB62EA2D-0FFD-4B24-82FD-A4D859ED5982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
