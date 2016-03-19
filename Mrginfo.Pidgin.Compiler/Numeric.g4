@@ -2,8 +2,6 @@ grammar Numeric;
 
 import Basic;
 
-tokens { Hex, FractionSeparator, DecimalPoint, BinPrefix, HexPrefix, ExponentPrefix }
-
 //                                  CHAR      ASC        BIN
 fragment Hex                    :  Digit
                                 |  'A'    //    65   110 1010
@@ -13,19 +11,21 @@ fragment Hex                    :  Digit
                                 |  'E'    //    69   110 1110
                                 |  'F'    //    70   110 1111
                                 ;
-fragment FractionSeparator      :  '/' ;  //    47  1110 0010
-fragment DecimalPoint           :  '.' ;  //    46  1110 0011
+FractionSeparator               :  '/' ;  //    47  1110 0010
+DecimalPoint                    :  '.' ;  //    46  1110 0011
 fragment TimeSeparator          :  ':' ;  //    58  1110 0100
 fragment TimePrefix             :  'T' ;  //    84  1110 0101
 fragment UtcZero                :  'Z' ;  //    90  1110 0110
 fragment BinPrefix              :  'b' ;  //    98  1110 0111
 fragment HexPrefix              :  'h' ;  //   104  1110 1000
-fragment ExponentPrefix         :  'e' ;  //   101  1110 1001
+ExponentPrefix                  :  'e' ;  //   101  1110 1001
 
 // Semantic error can occur!
-fragment Date               : Digit Digit Digit Digit Minus Digit Digit Minus Digit Digit ;
+fragment Date               : Digit Digit Digit Digit Minus Digit Digit Minus Digit Digit
+                            ;
 // Semantic error can occur!
-fragment Time               : Digit Digit TimeSeparator Digit Digit TimeSeparator Digit Digit ( UtcZero | ( Plus | Minus ) Digit Digit ( TimeSeparator Digit Digit )? ) ;
+fragment Time               : Digit Digit TimeSeparator Digit Digit TimeSeparator Digit Digit ( UtcZero | ( Plus | Minus ) Digit Digit ( TimeSeparator Digit Digit )? )?
+                            ;
 
 // Binary sugar
 BinNumber                   : ( Plus | Minus )? BinPrefix Bit+
@@ -39,12 +39,13 @@ HexNumber                   : ( Plus | Minus )? HexPrefix Hex+
 DateTime                    : Date ( TimePrefix Time )?
                             ;
 
-// Fraction sugar
-fraction                    : numeric FractionSeparator numeric
+// Decimal sugar
+Decimal                     : ( Plus | Minus )? Digit* DecimalPoint Digit+ ( ExponentPrefix ( Plus | Minus )? Digit+ )?
+                            | Digit+ ExponentPrefix ( Plus | Minus )? Digit+
                             ;
 
-// Decimal sugar
-decimal                     : ( Plus | Minus )? Digit* DecimalPoint Digit+ ( ExponentPrefix ( Plus | Minus )? Digit+ )?
+// Fraction sugar
+fraction                    : numeric FractionSeparator numeric
                             ;
 
 numeric                     : BinNumber
@@ -55,5 +56,5 @@ numeric                     : BinNumber
 
 composite                   : array
                             | fraction
-                            | decimal
+                            | Decimal
                             ;

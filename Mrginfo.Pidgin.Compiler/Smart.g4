@@ -2,21 +2,17 @@ grammar Smart;
 
 import Numeric;
 
-tokens { BeginString, EndString, Decorator, PathSeparator, To, Length }
-
 //                                  CHAR      ASC        BIN
 fragment BeginString            :  '[' ; //    91  1110 1010
 fragment EndString              :  ']' ; //    93  1110 1011
-fragment Decorator              :  '_' ; //    95  1110 1100
-fragment PathSeparator          : '\\' ; //    92     10 100
-fragment To                     :  '>' ; //    62     10 101
-fragment Length                 :  '#' ; //    35     10 110
-
-SomeText                        : .+?
-                                ;
+Decorator                       :  '_' ; //    95  1110 1100
+PathSeparator                   : '\\' ; //    92     10 100
+To                              :  '>' ; //    62     10 101
+At                              :  '@' ; //    64     10 110
+fragment SomeText               :  .+? ;
 
 // String sugar (empty = [])
-string                          : BeginString EndString
+String                          : BeginString EndString
                                 | BeginString SomeText EndString
                                 | Decorator BeginString SomeText EndString Decorator
                                 | Decorator Decorator BeginString SomeText EndString Decorator Decorator
@@ -26,7 +22,7 @@ string                          : BeginString EndString
 
 // Octet stream sugar
 slice                           : numeric To numeric
-                                | numeric Length numeric
+                                | numeric At numeric
                                 ;
 
 // Reference sugar [\1\2 -> key, \1\2\ -> value ]
@@ -36,8 +32,8 @@ path                            : PathSeparator ( numeric PathSeparator )* numer
 
 composite                       : array
                                 | fraction
-                                | decimal
-                                | string
+                                | Decimal
+                                | String
                                 | slice
                                 | path
                                 ;

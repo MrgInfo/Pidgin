@@ -1,14 +1,12 @@
 grammar Basic;
 
-tokens { ListSeparator, PairSeparator, Begin, End, Plus, Minus, Bit, Digit }
-
 //                                  CHAR      ASC        BIN
 fragment Space                  :  ' ' ; //    32        0 0
 fragment NewLine                : '\n' ; //    10        0 1
-fragment ListSeparator          :  ',' ; //    44     10 000
-fragment PairSeparator          :  '=' ; //    61     10 001
-fragment Begin                  :  '{' ; //   123     10 010
-fragment End                    :  '}' ; //   125     10 011
+ListSeparator                   :  ',' ; //    44     10 000
+PairSeparator                   :  '=' ; //    61     10 001
+Begin                           :  '{' ; //   123     10 010
+End                             :  '}' ; //   125     10 011
 fragment Plus                   :  '+' ; //    43  1110 0000
 fragment Minus                  :  '-' ; //    45  1110 0001
 fragment Bit                    :  '0'   //    48   110 0000
@@ -36,10 +34,10 @@ White                           : ( Space | NewLine )+ -> skip
 message                         : array
                                 ;
 
-array                           : Begin White? ( item ( White? ',' White? item )* White? )? End
+array                           : Begin White? ( item ( White? ListSeparator White? item )* White? )? End
                                 ;
 
-item                            : value ( White? ':' White? value )?
+item                            : value ( White? PairSeparator White? value )?
                                 ;
 
 value                           : numeric
