@@ -12,12 +12,15 @@ At                              :  '@' ; //    64     10 110
 fragment SomeText               :  .+? ;
 
 // String sugar (empty = [])
-String                          : BeginString EndString
+StringFragment                  : BeginString EndString
                                 | BeginString SomeText EndString
                                 | Decorator BeginString SomeText EndString Decorator
                                 | Decorator Decorator BeginString SomeText EndString Decorator Decorator
                                 | Decorator Decorator Decorator BeginString SomeText EndString Decorator Decorator Decorator
                                 | Decorator Decorator Decorator Decorator BeginString SomeText EndString Decorator Decorator Decorator Decorator
+                                ;
+
+String                          : StringFragment ( White StringFragment )*
                                 ;
 
 // Octet stream sugar

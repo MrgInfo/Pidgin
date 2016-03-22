@@ -8,14 +8,40 @@
     {
         const string PidginSample = @"
 {
-    2=6,
-    7 = { 1,2,3   },
-    +9 = h5A,
- b1111 = { -1 },
-    2/3 = 2016-01-01T00:00:00,
-    { .78, 12.34, 7e56 },
+    2 =
+        6,
+    7 = 
+        { 
+            1,
+            2,
+            3
+        },
+    +9 =
+        h5A,
+    b1111 =
+        { 
+            -1
+        },
+    2/3 = 
+        2016-01-01T00:00:00,
+    { 
+        .78,
+        12.34,
+        7e56
+    } = 
+        {
+            {
+                1
+            },
+            {
+                2
+            }
+        },
     6 = 10>20,
-    10@45 = [alma meg a fája]
+    10@45 =
+        [alma meg a fája] 
+        [még 1 sor]
+        _[és még 1]_
 }";
 
         static void Main()
@@ -31,7 +57,7 @@
             var commonTokenStream = new CommonTokenStream( lexer );
             var parser = new SmartParser( commonTokenStream );
             var context = parser.message();
-            WriteLine( context.GetText() );
+            WriteLine( context.ToStringTree() );
             ReadKey( true );
         }
     }
