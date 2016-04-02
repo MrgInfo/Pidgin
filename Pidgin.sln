@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrgInfo.Pidgin.Compiler", "Mrginfo.Pidgin.Compiler\MrgInfo.Pidgin.Compiler.csproj", "{DB62EA2D-0FFD-4B24-82FD-A4D859ED5982}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrgInfo.Pidgin.Console", "MrgInfo.Pidgin.Console\MrgInfo.Pidgin.Console.csproj", "{1D54D216-2A86-44FE-8721-67C6959CEB75}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23AB0E87-98E4-4336-A960-3D4091CB7D85}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		Pidgin.ruleset = Pidgin.ruleset
+		Pidgin.sln.DotSettings = Pidgin.sln.DotSettings
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

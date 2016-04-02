@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Local rules" Description="Best rules" ToolsVersion="14.0">
+  <IncludeAll Action="Warning" />
+  <Rules AnalyzerId="ExceptionAnalyzer" RuleNamespace="ExceptionAnalyzer">
+    <Rule Id="EA001" Action="Error" />
+    <Rule Id="EA002" Action="Error" />
+    <Rule Id="EA003" Action="Error" />
+    <Rule Id="EA004" Action="Error" />
+    <Rule Id="EA005" Action="Error" />
+    <Rule Id="EA006" Action="Error" />
+  </Rules>
+</RuleSet>
